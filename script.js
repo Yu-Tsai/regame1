@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    //--------------------------¥ş°ìÅÜ¼Æ«Å§i--------------------------//
+    //--------------------------å…¨åŸŸè®Šæ•¸å®£å‘Š--------------------------//
     var winw;
     var winh;
     var w;
     var h;
     var startfall1 = null;
 
-    //--------------------------¨ç¼Æ«Å§i--------------------------//
+    //--------------------------å‡½æ•¸å®£å‘Š--------------------------//
 
-    //±¼¸¨ª«1
+    //æ‰è½ç‰©1
     function setFall1() {
         var fall1 = $("<div>");
         fall1.append("<img class=\"img\" src=\"./fall1.png\" />")
@@ -29,9 +29,9 @@ $(document).ready(function () {
         })*/
     }
 
-    //--------------------------¨ç¼Æ°õ¦æ--------------------------//
+    //--------------------------å‡½æ•¸åŸ·è¡Œ--------------------------//
 
-    //ªì©l¤Æ
+    //åˆå§‹åŒ–
     (function  reset() {
         if ($(window).height() < $(window).width()) {
             winw = $(window).width();
@@ -64,7 +64,7 @@ $(document).ready(function () {
         })
     })();    
 
-    //½Õ¾ã¤j¤p
+    //èª¿æ•´å¤§å°
     (function () {
         $(window).resize(function () {
             if ($(window).height() < $(window).width()) {
@@ -99,6 +99,6 @@ $(document).ready(function () {
         });
     })();
 
-    //¹CÀ¸¶i¦æ
-    //startfall1 = setInterval(setFall1, 1000);
+    //éŠæˆ²é€²è¡Œ
+    startfall1 = setInterval(setFall1, 1000);
 });

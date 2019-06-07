@@ -4,6 +4,7 @@ $(document).ready(function () {
     var winh;
     var w;
     var h;
+    var gamestart = false;
     var startfall1 = null;
 
     //--------------------------函數宣告--------------------------//
@@ -104,11 +105,34 @@ $(document).ready(function () {
     })();
 
     //遊戲進行
-    $("#startbtn").on('click', function () {
+    $("#gamepage").on('click', "#startbtn", function () {
+        gamestart = true;
         startfall1 = setInterval(setFall1, 1000);
-        $(this).addClass("pausebtn");
         $("#startbtn > img").attr("src", "./pause.png");
-        $(this).removeClass("startbtn");
+        $(this).attr("id", "pausebtn");
     })
-    //startfall1 = setInterval(setFall1, 1000);
+    $("#gamepage").on('click', "#pausebtn", function () {
+        gamestart = false;
+        clearInterval(startfall1);
+        $("#pausebtn > img").attr("src", "./start.png");
+        $(this).attr("id", "startbtn");
+    })
+
+    $("#gamebase").mousemove(function (e) {
+        if (gamestart == true) {
+            sx = e.pageX - $("#gamebase").offset().left;
+            $("#catcher").css({
+                "left": sx - ($("#catcher").width() / 2)
+            })
+        }
+    })
+    $("#gamebase").on('touchmove', function (e) {
+        if (gamestart == true) {
+            var touch = e.originalEvent.targetTouches[0];
+            sx = touch.pageX - $("#gamebase").offset().left;
+            $("#catcher").css({
+                "left": sx - ($("#catcher").width() / 2)
+            })
+        }
+    });
 });

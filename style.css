@@ -19,6 +19,14 @@
     height:5vw;
 }
 
+#pausebtn{
+    position:absolute;
+    top:0;
+    left:0;
+    width:5vw;
+    height:5vw;
+}
+
 #gamebase{
     position:relative;
     top:0;

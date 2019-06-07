@@ -5,7 +5,12 @@ $(document).ready(function () {
     var w;
     var h;
     var gamestart = false;
+    var score = 0;
+    var time = 10;
+    var fallDir = new Array;
+    var playerDir = new Array;
     var startfall1 = null;
+    var startcheck = null;
 
     //--------------------------函數宣告--------------------------//
 
@@ -16,18 +21,60 @@ $(document).ready(function () {
         fall1.addClass("fallObj");
         fall1.addClass("fallObj1");
         $("#gamebase").append(fall1);
+        /*fall1.css({
+            "width": "10%"
+        })*/
+        //console.log(fall1.width());
+        //console.log($(".fallObj1").width() * 5 / 6);
         fall1.css({
-            "height": $(".fallObj1").width() * 5 / 6,
+            "height": fall1.width() * 5 / 6,
             "left": Math.floor(Math.random() * (w - $(".fallObj1").width())),
-            "top": -$(".fallObj1").width() * 5 / 6
+            "top": -fall1.width() * 5 / 6
         })
         fall1.stop().animate({ top: h + fall1.height() }, 2500, 'linear', function () { fall1.remove(); });
-        /*$(".pause").on("click", function () {
+        $("#gamepage").on('click', "#startbtn", function () {
+            fall1.animate({ top: h + fall1.height() * 2 + parseFloat(fall1.css("top")) }, 2500, 'linear', function () { fall1.remove(); });
+        })
+        $("#gamepage").on('click', "#pausebtn", function () {
             fall1.stop(true);
         })
-        $(".start").on("click", function () {
-            fall1.animate({ top: gamebase.height() + object.fallH1 }, 2500, function () { fall1.remove(); });
-        })*/
+    }
+
+    //碰撞偵測
+    function touch() {
+        $.each($(".fallObj"), function () {
+            /*fallDir[0] = $(this).position().top;  //上
+            fallDir[1] = $(this).position().left;  //左
+            fallDir[2] = $(this).position().top + $(this).height();  //下
+            fallDir[3] = $(this).position().left + $(this).width();  //右
+
+            playerDir[0] = $("#catcher").position().top;
+            playerDir[1] = $("#catcher").position().left;
+            playerDir[2] = $("#catcher").position().top + $("#catcher").height();
+            playerDir[3] = $("#catcher").position().left + $("#catcher").width();*/
+
+            fallDir[0] = parseFloat($(this).css("top"));  //上
+            fallDir[1] = parseFloat($(this).css("left"));  //左
+            fallDir[2] = parseFloat($(this).css("top")) + $(this).height();  //下
+            fallDir[3] = parseFloat($(this).css("left")) + $(this).width();  //右
+
+            playerDir[0] = parseFloat($("#catcher").css("top"));
+            playerDir[1] = parseFloat($("#catcher").css("left"));
+            playerDir[2] = parseFloat($("#catcher").css("top")) + $("#catcher").height();
+            playerDir[3] = parseFloat($("#catcher").css("left")) + $("#catcher").width();
+
+            //console.log(playerDir[0]);
+
+            if (playerDir[3] > fallDir[1] && playerDir[1] < fallDir[1] || playerDir[1] > fallDir[1] && playerDir[3] < fallDir[3] || playerDir[1] < fallDir[3] && playerDir[3] > fallDir[3]) {
+                if (playerDir[0] < fallDir[2] && playerDir[2] > fallDir[2] || playerDir[0] < fallDir[0] && playerDir[2] > fallDir[0] || playerDir[2] < fallDir[2] && playerDir[0] > fallDir[0]) {
+                    $(this).removeClass("fallObj");
+                    $(this).addClass("catchObj");
+                    $(this).stop().animate({ top: playerDir[0], left: playerDir[1] + $("#catcher").width() / 2, width: 0, height: 0 }, 100, function () { $(this).remove(); });
+                    score = score + 1;
+                    /*$(".score > span").html(score);*/
+                }
+            }
+        });
     }
 
     //--------------------------函數執行--------------------------//
@@ -59,7 +106,8 @@ $(document).ready(function () {
 
         $("#catcher").css({
             "height": $("#catcher").width() * 397 / 980,
-            "top": $("#gamebase").height() - $("#catcher").width() * 397 / 980
+            "top": h - $("#catcher").width() * 397 / 980,
+            "left": "40%"
         })
     })();    
 
@@ -96,7 +144,7 @@ $(document).ready(function () {
 
             $("#catcher").css({
                 "height": $("#catcher").width() * 397 / 980,
-                "top": $("#gamebase").height() - $("#catcher").width() * 397 / 980
+                "top": h - $("#catcher").width() * 397 / 980
             })
             $(".fallObj1").css({
                 "height": $(".fallObj1").width() * 5 / 6
@@ -108,12 +156,14 @@ $(document).ready(function () {
     $("#gamepage").on('click', "#startbtn", function () {
         gamestart = true;
         startfall1 = setInterval(setFall1, 1000);
+        startcheck = setInterval(touch, 0);
         $("#startbtn > img").attr("src", "./pause.png");
         $(this).attr("id", "pausebtn");
     })
     $("#gamepage").on('click', "#pausebtn", function () {
         gamestart = false;
         clearInterval(startfall1);
+        clearInterval(startcheck);
         $("#pausebtn > img").attr("src", "./start.png");
         $(this).attr("id", "startbtn");
     })
@@ -137,5 +187,5 @@ $(document).ready(function () {
                 })
             }           
         }
-    });
+    })
 });

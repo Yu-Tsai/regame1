@@ -118,21 +118,24 @@ $(document).ready(function () {
         $(this).attr("id", "startbtn");
     })
 
-    $("#gamebase").mousemove(function (e) {
+    $("#gamebase").mousemove(function (event) {
         if (gamestart == true) {
-            sx = e.pageX - $("#gamebase").offset().left;
+            sx = event.pageX - $("#gamebase").offset().left;
             $("#catcher").css({
                 "left": sx - ($("#catcher").width() / 2)
             })
         }
     })
-    $("#gamebase").on('touchmove', function (e) {
+    $("#gamebase").on('touchmove', function (event) {
+        event.preventDefault();
         if (gamestart == true) {
-            var touch = e.originalEvent.targetTouches[0];
+            var touch = event.originalEvent.targetTouches[0];
             sx = touch.pageX - $("#gamebase").offset().left;
-            $("#catcher").css({
-                "left": sx - ($("#catcher").width() / 2)
-            })
+            if (sx - ($("#catcher").width() / 2) >= -($("#catcher").width() / 2) && sx - ($("#catcher").width() / 2) <= w - ($("#catcher").width() / 2)) {
+                $("#catcher").css({
+                    "left": sx - ($("#catcher").width() / 2)
+                })
+            }           
         }
     });
 });

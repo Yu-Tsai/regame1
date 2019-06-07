@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    //--------------------------å…¨åŸŸè®Šæ•¸å®£å‘Š--------------------------//
+    //--------------------------¥ş°ìÅÜ¼Æ«Å§i--------------------------//
     var winw;
     var winh;
     var w;
     var h;
     var startfall1 = null;
 
-    //--------------------------å‡½æ•¸å®£å‘Š--------------------------//
+    //--------------------------¨ç¼Æ«Å§i--------------------------//
 
-    //æ‰è½ç‰©1
+    //±¼¸¨ª«1
     function setFall1() {
         var fall1 = $("<div>");
         fall1.append("<img class=\"img\" src=\"./fall1.png\" />")
@@ -29,9 +29,9 @@ $(document).ready(function () {
         })*/
     }
 
-    //--------------------------å‡½æ•¸åŸ·è¡Œ--------------------------//
+    //--------------------------¨ç¼Æ°õ¦æ--------------------------//
 
-    //åˆå§‹åŒ–
+    //ªì©l¤Æ
     (function  reset() {
         if ($(window).height() < $(window).width()) {
             winw = $(window).width();
@@ -40,17 +40,14 @@ $(document).ready(function () {
             winh = $(window).width();
             winw = $(window).height();
         }
-
         $("#gamepage").css({
             "top": 0,
             "left": 0,
             "width": winw,
             "height": winh
         })
-
         w = $("#gamebase").width();
         h = $("#gamebase").height();
-
         if ($(window).height() >= $(window).width()) {
             $("#gamepage").css({
                 "left": "100%",
@@ -58,13 +55,14 @@ $(document).ready(function () {
                 "transform-origin": "0 0"
             })
         }
+
         $("#catcher").css({
             "height": $("#catcher").width() * 397 / 980,
             "top": $("#gamebase").height() - $("#catcher").width() * 397 / 980
         })
     })();    
 
-    //èª¿æ•´å¤§å°
+    //½Õ¾ã¤j¤p
     (function () {
         $(window).resize(function () {
             if ($(window).height() < $(window).width()) {
@@ -88,17 +86,29 @@ $(document).ready(function () {
                 winh = $(window).width();
                 winw = $(window).height();
             }
-
             $("#gamepage").css({
                 "width": winw,
                 "height": winh
             })
-
             w = $("#gamebase").width();
             h = $("#gamebase").height();
+
+            $("#catcher").css({
+                "height": $("#catcher").width() * 397 / 980,
+                "top": $("#gamebase").height() - $("#catcher").width() * 397 / 980
+            })
+            $(".fallObj1").css({
+                "height": $(".fallObj1").width() * 5 / 6
+            })
         });
     })();
 
-    //éŠæˆ²é€²è¡Œ
-    startfall1 = setInterval(setFall1, 1000);
+    //¹CÀ¸¶i¦æ
+    $("#startbtn").on('click', function () {
+        startfall1 = setInterval(setFall1, 1000);
+        $(this).addClass("pausebtn");
+        $("#startbtn > img").attr("src", "./pause.png");
+        $(this).removeClass("startbtn");
+    })
+    //startfall1 = setInterval(setFall1, 1000);
 });
